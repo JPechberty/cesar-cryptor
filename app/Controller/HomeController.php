@@ -20,11 +20,14 @@ class HomeController implements ControllerInterface
      */
     public function execute(Request $request): string|null
     {
+
         return TwigCore::getEnvironment()->render('home/home.html.twig',
             [
-                'titre'   => 'Hello World !',
+                'titre' => 'Home',
                 'requete' => $request
             ]
         );
     }
+
 }
+

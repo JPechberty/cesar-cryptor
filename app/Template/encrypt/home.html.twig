@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ parent() }} - {{ titre }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <h1>{{ titre }}</h1>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Enter message to encrypt</h3>
+                </div>
+                <div class="card-body">
+                    <form method="get" action="/" id="encryptMessageForm">
+                        <div class="form-group">
+                            <label for="offset">Offset</label>
+                            <input type="number" name="offset" class="form-control" id="offset" aria-describedby="gapHelp">
+                            <small id="offsetHelp" class="form-text text-muted">Enter a number representing the character offset </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="mt-2 d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            {% if email is not empty %}
+                <div class="alert alert-success mt-3" role="alert">
+                    {{email | raw}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
