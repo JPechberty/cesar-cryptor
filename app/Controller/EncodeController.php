@@ -9,7 +9,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class EncryptController implements ControllerInterface
+class EncodeController implements ControllerInterface
 {
     /**
      * @param Request $request Requête HTTP
@@ -22,40 +22,21 @@ class EncryptController implements ControllerInterface
     {
         if ($request->getHttpMethod() === "POST" && $request->getVars() !== []) {
             $inputs = $request->getVars();
-            $offset = $inputs["offset"];
             $message = $inputs["message"];
 
-            $encrypted = $this->encrypt($message, $offset);
+            $encoded = base64_encode($message);
 
-
-
-            var_dump([
-                "offset" => $offset,
-                "message" => $message,
-                "encrypted" => $encrypted
-            ]);
         }
 
-        return TwigCore::getEnvironment()->render('encrypt/home.html.twig',
+        return TwigCore::getEnvironment()->render('encode/home.html.twig',
             [
                 'titre' => 'Encrypt',
-                'requete' => $request
+                'requete' => $request,
+                'message' => $message ?? "",
+                'encoded' => $encoded ?? "",
             ]
         );
     }
 
-
-    private function encrypt($message, $offset): string
-    {
-        $raw = array_map(function ($char) use ($offset) {
-            if ($char === " ") {
-                return " ";
-            } else {
-                return ord($char) + $offset;
-            }
-        }, str_split($message));
-
-        return join(".",$raw);
-    }
 }
 
